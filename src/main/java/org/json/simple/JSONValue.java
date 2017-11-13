@@ -4,17 +4,14 @@
  */
 package org.json.simple;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Collection;
-// import java.util.List;
-import java.util.Map;
-
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.io.*;
+import java.util.Collection;
+import java.util.Map;
+
+// import java.util.List;
 
 
 /**
@@ -41,7 +38,7 @@ public class JSONValue {
 	 * {@code null}; please use {@link JSONValue#parseWithException(Reader)}
 	 * instead
 	 */
-	public static Object parse(Reader in){
+	public static Object parse(final Reader in){
 		try{
 			JSONParser parser=new JSONParser();
 			return parser.parse(in);
@@ -71,7 +68,7 @@ public class JSONValue {
 	 * {@code null}; please use {@link JSONValue#parseWithException(String)}
 	 * instead
 	 */
-	public static Object parse(String s){
+	public static Object parse(final String s){
 		StringReader in=new StringReader(s);
 		return parse(in);
 	}
@@ -93,12 +90,12 @@ public class JSONValue {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static Object parseWithException(Reader in) throws IOException, ParseException{
+	public static Object parseWithException(final Reader in) throws IOException, ParseException{
 		JSONParser parser=new JSONParser();
 		return parser.parse(in);
 	}
 	
-	public static Object parseWithException(String s) throws ParseException{
+	public static Object parseWithException(final String s) throws ParseException{
 		JSONParser parser=new JSONParser();
 		return parser.parse(s);
 	}
@@ -112,12 +109,11 @@ public class JSONValue {
      * "this" as the first parameter, use JSONObject.writeJSONString(Map, Writer) or JSONArray.writeJSONString(List, Writer) instead. 
      * 
      * @see org.json.simple.JSONObject#writeJSONString(Map, Writer)
-     * @see org.json.simple.JSONArray#writeJSONString(List, Writer)
      * 
      * @param value
-     * @param writer
+     * @param out
      */
-	public static void writeJSONString(Object value, Writer out) throws IOException {
+	public static void writeJSONString(final Object value, final Writer out) throws IOException {
 		if(value == null){
 			out.write("null");
 			return;
@@ -233,12 +229,11 @@ public class JSONValue {
 	 * "this" as the parameter, use JSONObject.toJSONString(Map) or JSONArray.toJSONString(List) instead. 
 	 * 
 	 * @see org.json.simple.JSONObject#toJSONString(Map)
-	 * @see org.json.simple.JSONArray#toJSONString(List)
 	 * 
 	 * @param value
 	 * @return JSON text, or "null" if value is null or it's an NaN or an INF number.
 	 */
-	public static String toJSONString(Object value){
+	public static String toJSONString(final Object value){
 		final StringWriter writer = new StringWriter();
 		
 		try{
@@ -255,10 +250,10 @@ public class JSONValue {
 	 * @param s
 	 * @return
 	 */
-	public static String escape(String s){
+	public static String escape(final String s){
 		if(s==null)
 			return null;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         escape(s, sb);
         return sb.toString();
     }
@@ -267,7 +262,7 @@ public class JSONValue {
      * @param s - Must not be null.
      * @param sb
      */
-    static void escape(String s, StringBuffer sb) {
+    static void escape(final String s, final StringBuilder sb) {
     	final int len = s.length();
 		for(int i=0;i<len;i++){
 			char ch=s.charAt(i);

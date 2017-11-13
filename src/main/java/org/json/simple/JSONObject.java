@@ -16,7 +16,8 @@ import java.util.Map;
  * 
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
-public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAware{
+@SuppressWarnings( "ALL" )
+public class JSONObject extends HashMap<String, Object> implements Map<String, Object>, JSONAware, JSONStreamAware {
 	
 	private static final long serialVersionUID = -503443796854799292L;
 	
@@ -31,7 +32,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	 * 
 	 * @param map
 	 */
-	public JSONObject(Map map) {
+	public JSONObject(final Map<String, Object> map) {
 		super(map);
 	}
 
@@ -45,14 +46,14 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
      * @param map
      * @param out
      */
-	public static void writeJSONString(Map map, Writer out) throws IOException {
+	public static void writeJSONString(final Map<String, Object> map, final Writer out) throws IOException {
 		if(map == null){
 			out.write("null");
 			return;
 		}
 		
 		boolean first = true;
-		Iterator iter=map.entrySet().iterator();
+		Iterator<Map.Entry<String, Object>> iter = map.entrySet().iterator();
 		
         out.write('{');
 		while(iter.hasNext()){
@@ -70,7 +71,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 		out.write('}');
 	}
 
-	public void writeJSONString(Writer out) throws IOException{
+	public void writeJSONString(final Writer out) throws IOException{
 		writeJSONString(this, out);
 	}
 	
@@ -83,7 +84,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	 * @param map
 	 * @return JSON text, or "null" if map is null.
 	 */
-	public static String toJSONString(Map map){
+	public static String toJSONString(final Map<String, Object> map){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -103,9 +104,8 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 		return toJSONString();
 	}
 
-	public static String toString(String key,Object value){
-        StringBuffer sb = new StringBuffer();
-        sb.append('\"');
+	public static String toString(final String key, final Object value){
+        StringBuilder sb = new StringBuilder( "\"");
         if(key == null)
             sb.append("null");
         else
@@ -126,7 +126,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	 * @param s
 	 * @return
 	 */
-	public static String escape(String s){
+	public static String escape(final String s){
 		return JSONValue.escape(s);
 	}
 }
